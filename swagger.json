@@ -1,0 +1,185 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "0.0.1",
+        "title": "<StadtRadDBService>"
+    },
+    "paths": {
+        "/allStations": {
+            "get": {
+                "description": "Return Name, lat, long of all stations\n",
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "title": "ArrayOfStations",
+                            "type": "array",
+                            "items": {
+                                "title": "Station",
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "latitude": {
+                                        "type": "number"
+                                    },
+                                    "longitude": {
+                                        "type": "number"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/freeBikesOfStation": {
+            "get": {
+                "description": "Return the actual number of freebikes at the given stationname\n",
+                "parameters": [
+                    {
+                        "name": "stationName",
+                        "in": "query",
+                        "description": "Free bikes of a specific Station",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "title": "freebikes",
+                            "type": "integer"
+                        }
+                    }
+                }
+            }
+        },
+        "/freeBikesofStationAtSpecTime": {
+            "get": {
+                "description": "Return the actual number of freebikes at the given stationname\n",
+                "parameters": [
+                    {
+                        "name": "stationName",
+                        "in": "query",
+                        "description": "free Bikes of a specific Station at a specific timestamp.",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "name": "timestamp",
+                        "in": "query",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "title": "freebikes",
+                            "type": "integer"
+                        }
+                    }
+                }
+            }
+        },
+        "/nextXStationsofLatLong": {
+            "get": {
+                "description": "Return the actual number of freebikes at the given stationname\n",
+                "parameters": [
+                    {
+                        "name": "x",
+                        "in": "query",
+                        "description": "Get the next X stations around lat,long.",
+                        "type": "integer",
+                        "required": true
+                    },
+                    {
+                        "name": "lat",
+                        "in": "query",
+                        "type": "number",
+                        "required": true
+                    },
+                    {
+                        "name": "long",
+                        "in": "query",
+                        "type": "number",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "title": "ArrayOfStations",
+                            "type": "array",
+                            "items": {
+                                "title": "Station",
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "latitude": {
+                                        "type": "number"
+                                    },
+                                    "longitude": {
+                                        "type": "number"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/newData": {
+            "post": {
+                "parameters": [
+                    {
+                        "name": "data",
+                        "in": "body",
+                        "description": "New Data of StadtradCrawler",
+                        "schema": {
+                            "$ref": "#/definitions/DataSet"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "newData successful"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "DataSet": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "freebikes": {
+                    "type": "string"
+                },
+                "timestamp": {
+                    "type": "string"
+                },
+                "latitude": {
+                    "type": "string"
+                },
+                "longitude": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
