@@ -79,6 +79,9 @@ public class Main {
 			    preparedStmt.setString(4, pair.get("timestamp"));
 			    preparedStmt.setString(5, pair.get("latitude"));
 			    preparedStmt.setString(6, pair.get("longitude")); 
+			    
+			 // execute the preparedstatement
+			     preparedStmt.execute();
 			}
 			
 		    return "";
