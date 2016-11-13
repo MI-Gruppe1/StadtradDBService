@@ -88,7 +88,7 @@
         },
         "/nextXStationsofLatLong": {
             "get": {
-                "description": "Return the actual number of freebikes at the given stationname\n",
+                "description": "Get the next X stations around lat,long.\n",
                 "parameters": [
                     {
                         "name": "x",

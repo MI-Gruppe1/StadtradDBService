@@ -62,7 +62,7 @@ paths:
   /nextXStationsofLatLong:
     get:
       description: |
-        Return the actual number of freebikes at the given stationname
+        Get the next X stations around lat,long.
       parameters:
         - name: x
           in: query
