@@ -1,3 +1,9 @@
+/**
+ * @author Flah-Uddin Ahmad
+ * @author Andreas Loeffler
+ * @version 1.0
+ */
+
 package dbservice;
 
 import static spark.Spark.*;
@@ -7,16 +13,19 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mysql.jdbc.PreparedStatement;
-import com.mysql.jdbc.Statement;
 
-public class Main {
+
+/**
+ * StadtRadDBService manages get and post requests.
+ * Functionality of this Class is to store/get data to/from DB
+ */
+public class StadtRadDBservice {
 
 	private static Connection connection;
 
