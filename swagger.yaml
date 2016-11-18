@@ -28,7 +28,7 @@ paths:
       description: |
         Return the actual number of freebikes at the given stationname
       parameters:
-        - name: stationName
+        - name: station_name
           in: query
           description: Free bikes of a specific Station
           type: string
@@ -44,12 +44,12 @@ paths:
       description: |
         Return the actual number of freebikes at the given stationname
       parameters:
-        - name: stationName
+        - name: station_name
           in: query
           description: free Bikes of a specific Station at a specific timestamp.
           type: string
           required: true
-        - name: timestamp
+        - name: information_timestamp
           in: query
           type: string
           required: true
@@ -64,16 +64,16 @@ paths:
       description: |
         Get the next X stations around lat,long.
       parameters:
-        - name: x
+        - name: number_of_stations
           in: query
           description: 'Get the next X stations around lat,long.'
           type: integer
           required: true
-        - name: lat
+        - name: latitude
           in: query
           type: number
           required: true
-        - name: long
+        - name: longitude
           in: query
           type: number
           required: true
@@ -111,13 +111,13 @@ definitions:
   DataSet:
     type: object
     properties:
-      id:
+      station_id:
         type: string
-      name:
+      station_name:
         type: string
-      freebikes:
+      free_bikes:
         type: string
-      timestamp:
+      information_timestamp:
         type: string
       latitude:
         type: string
