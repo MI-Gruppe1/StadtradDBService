@@ -38,6 +38,8 @@ public class StadtRadDBservice {
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			connection = (Connection) DriverManager.getConnection("jdbc:mysql://mysqldb/mi", "mi", "miws16");
+			// Fuer lokalen Test
+			//connection = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/mi", "mi", "miws16");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			MailNotification.sendMail(e);
@@ -48,6 +50,9 @@ public class StadtRadDBservice {
 
 	public static void main(String[] args) throws SQLException {
 
+		// Port fuer diesen Service setzten
+		spark.Spark.port(6000);
+		
 		connectToDB();
 
 		// Instanz des Jsonparsers erstellen fuer alle Routen nutzbar
@@ -124,9 +129,6 @@ public class StadtRadDBservice {
 			// Aus dem Json ein Javaobjekt erstellen
 			List<Map<String, String>> itemsList = gson.fromJson(json, type);
 
-			System.out.println("List Size: " + itemsList.size());
-			System.out.println("First Item: " + itemsList.get(0));
-
 			String query = "insert into crawledData (station_id, station_name, free_bikes, information_timestamp, latitude, longitude) "
 					+ "values (?, ?, ?, ?, ?, ?)";
 
@@ -142,6 +144,10 @@ public class StadtRadDBservice {
 				// execute the preparedstatement
 				preparedStmt.execute();
 			}
+			
+			// Damit die Datenstruktur vom Garbage-Collector zerstoert wird
+			itemsList.clear();
+			itemsList = null;
 
 			return "";
 		});
