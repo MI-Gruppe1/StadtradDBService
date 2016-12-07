@@ -33,6 +33,7 @@ public class StadtRadDBservice {
 
 	private static Connection connection;
 	private static final double R = 6372.8; //Erdradius in km
+	private static PreparedStatement preparedStmt;
 
 	private static Connection connectToDB() {
 		try {
@@ -133,7 +134,7 @@ public class StadtRadDBservice {
 					+ "values (?, ?, ?, ?, ?, ?)";
 
 			for (Map<String, String> pair : itemsList) {
-				PreparedStatement preparedStmt = (PreparedStatement) connection.prepareStatement(query);
+				preparedStmt = (PreparedStatement) connection.prepareStatement(query);
 				preparedStmt.setString(1, pair.get("id"));
 				preparedStmt.setString(2, pair.get("name"));
 				preparedStmt.setString(3, pair.get("free_bikes"));
