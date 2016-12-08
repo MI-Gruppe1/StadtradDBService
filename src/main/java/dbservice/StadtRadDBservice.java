@@ -34,6 +34,9 @@ public class StadtRadDBservice {
 	private static Connection connection;
 	private static final double R = 6372.8; //Erdradius in km
 	private static PreparedStatement preparedStmt;
+	private static String json;
+	private static Type type;
+	private static List<Map<String, String>> itemsList;
 
 	private static Connection connectToDB() {
 		try {
@@ -121,14 +124,14 @@ public class StadtRadDBservice {
 
 		post("/newData", (request, response) -> {
 			// Speichern des Jsons aus dem Requestbody
-			String json = request.body();
+			json = request.body();
 
 			// Format fuer das umwandeln jsons in ein Javaobjekt festelegen
-			Type type = new TypeToken<List<Map<String, String>>>() {
+			type = new TypeToken<List<Map<String, String>>>() {
 			}.getType();
 
 			// Aus dem Json ein Javaobjekt erstellen
-			List<Map<String, String>> itemsList = gson.fromJson(json, type);
+			itemsList = gson.fromJson(json, type);
 
 			String query = "insert into crawledData (station_id, station_name, free_bikes, information_timestamp, latitude, longitude) "
 					+ "values (?, ?, ?, ?, ?, ?)";
@@ -146,10 +149,6 @@ public class StadtRadDBservice {
 				preparedStmt.execute();
 			}
 			
-			// Damit die Datenstruktur vom Garbage-Collector zerstoert wird
-			itemsList.clear();
-			itemsList = null;
-
 			return "";
 		});
 	}
