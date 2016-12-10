@@ -33,7 +33,6 @@ public class StadtRadDBservice {
 
 	private static Connection connection;
 	private static final double R = 6372.8; //Erdradius in km
-	private static PreparedStatement preparedStmt;
 
 	private static Connection connectToDB() {
 		try {
@@ -104,6 +103,7 @@ public class StadtRadDBservice {
 			}
 
 			st.close();
+			rs.close();
 			return free_bikes;
 		});
 
@@ -134,7 +134,7 @@ public class StadtRadDBservice {
 					+ "values (?, ?, ?, ?, ?, ?)";
 
 			for (Map<String, String> pair : itemsList) {
-				preparedStmt = (PreparedStatement) connection.prepareStatement(query);
+				PreparedStatement preparedStmt = (PreparedStatement) connection.prepareStatement(query);
 				preparedStmt.setString(1, pair.get("id"));
 				preparedStmt.setString(2, pair.get("name"));
 				preparedStmt.setString(3, pair.get("free_bikes"));
@@ -142,13 +142,9 @@ public class StadtRadDBservice {
 				preparedStmt.setString(5, pair.get("latitude"));
 				preparedStmt.setString(6, pair.get("longitude"));
 
-				// execute the preparedstatement
 				preparedStmt.execute();
+				preparedStmt.close();
 			}
-			
-			// Damit die Datenstruktur vom Garbage-Collector zerstoert wird
-			itemsList.clear();
-			itemsList = null;
 
 			return "";
 		});
@@ -168,6 +164,7 @@ public class StadtRadDBservice {
 		}
 
 		st.close();
+		rs.close();
 		
 		return objList;
 	}
