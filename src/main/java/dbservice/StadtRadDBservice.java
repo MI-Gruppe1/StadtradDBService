@@ -21,6 +21,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
+import javax.management.relation.RelationSupportMBean;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mysql.jdbc.PreparedStatement;
@@ -34,7 +36,7 @@ public class StadtRadDBservice {
 	private static Connection connection;
 	private static final double R = 6372.8; //Erdradius in km
 
-	private static Connection connectToDB() {
+	private static Connection connectToDB() { 
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			connection = (Connection) DriverManager.getConnection("jdbc:mysql://mysqldb/mi", "mi", "miws16");
@@ -79,6 +81,10 @@ public class StadtRadDBservice {
 			}
 
 			st.close();
+			
+			if (free_bikes == -1) {
+				response.status(400);
+			}
 			return free_bikes;
 		});
 
@@ -104,6 +110,9 @@ public class StadtRadDBservice {
 
 			st.close();
 			rs.close();
+			if (free_bikes == -1) {
+				response.status(400);
+			}
 			return free_bikes;
 		});
 
